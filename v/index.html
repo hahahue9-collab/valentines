@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>For Angie ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ffd6e8, #ffeef5, #e0f7fa);
+      overflow: hidden;
+      color: #ff6fa5;
+    }
+
+    .screen {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s ease;
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #ff85b3;
+      text-shadow: 0 4px 15px rgba(255, 133, 179, 0.3);
+    }
+
+    button {
+      padding: 14px 28px;
+      margin: 12px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 50px;
+      background: #ffffffcc;
+      color: #ff6fa5;
+      box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+      background: #fff0f6;
+      box-shadow: 0 12px 25px rgba(255, 182, 193, 0.5);
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      pointer-events: none;
+      filter: drop-shadow(0 4px 6px rgba(255, 182, 193, 0.4));
+    }
+
+    #poem {
+      background: #ffffffcc;
+      padding: 40px;
+      border-radius: 30px;
+      max-width: 650px;
+      font-size: 1.4em;
+      line-height: 1.8em;
+      box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+      opacity: 0;
+      animation: fadeIn 3s forwards;
+      color: #ff6fa5;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- First Screen -->
+  <div class="screen" id="screen1">
+    <h1>Will you be my Valentines? 💘</h1>
+    <div>
+      <button onclick="sayYes(event)">Yes</button>
+      <button onclick="sayYes(event)">Yes</button>
+    </div>
+  </div>
+
+  <!-- Second Screen -->
+  <div class="screen hidden" id="screen2">
+    <h1>HAPPY VALENTINES DAY ANGIE 💕</h1>
+    <button id="continueBtn" style="display:none;" onclick="showPoem()">Continue</button>
+  </div>
+
+  <!-- Poem Screen -->
+  <div class="screen hidden" id="screen3">
+    <div id="poem">
+      Angie,<br><br>
+      Your smile is so dandy,<br>
+      You make me go crazy (for you),<br>
+      You're as pretty as a fairy,<br>
+      I love you so dearly,<br>
+      You'll forever be my baby,<br><br>
+      <strong>I LOVE YOU ANGIE &lt;3</strong>
+    </div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="loveSong" src="20201203.mp3"></audio>
+
+  <script>
+    function sayYes(e) {
+      heartBurst(e.clientX, e.clientY);
+
+      setTimeout(() => {
+        document.getElementById("screen1").classList.add("hidden");
+        document.getElementById("screen2").classList.remove("hidden");
+
+        setTimeout(() => {
+          document.getElementById("continueBtn").style.display = "inline-block";
+        }, 2000);
+      }, 600);
+    }
+
+    function showPoem() {
+      document.getElementById("screen2").classList.add("hidden");
+      document.getElementById("screen3").classList.remove("hidden");
+
+      const music = document.getElementById("loveSong");
+      music.volume = 0.3;
+      music.play();
+    }
+
+    function heartBurst(x, y) {
+      for (let i = 0; i < 40; i++) {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💗";
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
+        heart.style.fontSize = (15 + Math.random() * 25) + "px";
+
+        let angle = Math.random() * 2 * Math.PI;
+        let distance = 150 + Math.random() * 100;
+
+        heart.animate([
+          { transform: "translate(0,0)", opacity: 1 },
+          { 
+            transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`,
+            opacity: 0
+          }
+        ], {
+          duration: 1000,
+          easing: "ease-out"
+        });
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1000);
+      }
+    }
+  </script>
+
+</body>
+</html>
+
